@@ -3,19 +3,7 @@
 [kelompok 1]
 """
 import numpy as np
-
-"""
-a = np.array([[2.0, 7.0, 5.0, 5.0], 
-              [3.0, 6.0, 8.0, 2.0], 
-              [5.0, 4.0, 9.0, 1.0], 
-              [2.0, 7.0, 5.0, 1.0]])
-b=[14.0, 17.0, 18.0, 20.0]
-
-#a = np.array([[2.0, 7.0, 5.0], 
-#              [3.0, 6.0, 8.0], 
-#              [5.0, 4.0, 9.0]])
-#b=[14.0, 17.0, 18.0]
-"""
+import main
 
 def gauss(a, b):
     """
@@ -53,6 +41,7 @@ def gauss(a, b):
 def input_polinom(n):
     """n=derajat polinom
     """
+    print("------------------------")
     n = n
     a = np.zeros((n, n))
     b = np.zeros(n)
@@ -81,12 +70,11 @@ def input_polinom(n):
                 print('......You did not enter a valid integer! Try again!')
             else:
                 break
-
     return a, b
 
 
 def lihat_polinom():
-    global a_, b_
+    print("------------------------")
     n = len(a_)
     for i in range(0, n):
         print("|", end=' ')
@@ -94,13 +82,13 @@ def lihat_polinom():
             print(f"{a_[i][j]}", end=' ')
             if j == n - 1:
                 print(f"| |x{i}|  |{b_[i]}|")
+    input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
 
 
 def input_file():
     print("------------------------")
     file = input("Lokasi file: ")
-    print("------------------------")
-    input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
+
     global a_, b_, j
     line = []
     a = []
@@ -118,6 +106,9 @@ def input_file():
 
     a_ = np.array(a, dtype='float').reshape(n, n)
     b_ = np.array(b, dtype='float')
+    print("------------------------")
+    input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
+
     return
 
 
@@ -138,7 +129,7 @@ def choice():
         try:
             i = int(input("Masukan menu untuk melanjutkan: "))
         except ValueError:
-            print('......You did not enter a valid integer! Try again!')
+            print("Angka yang dimasukkan salah!")
             print("------------------------")
         else:
             break
@@ -170,7 +161,7 @@ def question(n):
             try:
                 lihat_polinom()
             except:
-                print("...Soal belum diinput")
+                print("...Soal belum diinput/ salah")
                 input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
         elif a == 4:
             try:
@@ -185,49 +176,59 @@ def question(n):
         elif a == 5:
             output_file()
         elif a == 6:
-            gauss_inf()
+            gauss_interface()
         elif a == 0:
-            pass
+            main.main()
         else:
             pass
 
 
-def gauss_inf():
+def gauss_interface():
     """Gauss Interface Program
     """
-    a_ = np.array(0)
-    b_ = np.array(0)
-    x_ = np.array(0)
-    n_ = 0
-
-    print("========================")
-    print("1. Sistem Persamaan Linier (SPL) 3 Variabel")
-    print("2. SPL 4 Variabel")
-    print("3. SPL 5 Variabel")
-    print("4. SPL 6 Variabel")
-    print("5. SPL 7 Variabel")
-    print("6. Kembali ke menu sebelumnya")
-    print("0. Kembali ke menu utama")
     while True:
-        a = choice()
+        print("========================")
+        print("1. Sistem Persamaan Linier (SPL) 3 Variabel")
+        print("2. SPL 4 Variabel")
+        print("3. SPL 5 Variabel")
+        print("4. SPL 6 Variabel")
+        print("5. SPL 7 Variabel")
+        print("6. Kembali ke menu sebelumnya")
+        print("0. Kembali ke menu utama")
+        print("99. Exit program")
+        
+        a: int = choice()
         if a == 1:
+            print("------------------------")
+            print("Gauss 3 Variabel")
             question(3)
         elif a == 2:
+            print("------------------------")
+            print("Gauss 4 Variabel")
             question(4)
         elif a == 3:
+            print("------------------------")
+            print("Gauss 5 Variabel")
             question(5)
         elif a == 4:
+            print("------------------------")
+            print("Gauss 6 Variabel")
             question(6)
         elif a == 5:
+            print("------------------------")
+            print("Gauss 7 Variabel")
             question(7)
         elif a == 6:
             pass
         elif a == 0:
-            pass
+            main.main()
+        elif a ==99:
+            break
         else:
             pass
 
 
 # -------------------------------------------#
 
-gauss_inf()
+if __name__ == "__main__":
+    gauss_interface()

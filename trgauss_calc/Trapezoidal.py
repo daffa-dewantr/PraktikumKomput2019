@@ -13,6 +13,7 @@ function:
 """
 import matplotlib.pyplot as plt
 import numpy as np
+import main
 
 
 def trap(fx, x_min, x_max, N=1000):
@@ -34,7 +35,7 @@ def trap(fx, x_min, x_max, N=1000):
     def f(x):
         return eval(fx)
 
-    h = (x_min - x_max) / N  # lebar grid
+    h = (x_max - x_min) / N  # lebar grid
     jum = 0.5 * f(x_min)
     for i in range(1, N):
         xi = x_min + h * i
@@ -52,7 +53,7 @@ def choice():
         try:
             i = int(input("Masukan menu untuk melanjutkan: "))
         except ValueError:
-            print('......You did not enter a valid integer! Try again!')
+            print("Angka yang dimasukkan salah!")
             print("------------------------")
         else:
             break
@@ -128,55 +129,65 @@ def graph_fx(fx):
     pass
 
 
-def trapezoidal_inf():
+def trapezoidal_interface():
     """Gauss Interface Program
     """
-
-    fx = ''
-    solusi_trap = 0
-
-    print("========================")
-    print("1. Input persamaan manual")
-    print("2. Input persamaan dari file")
-    print("3. Tampilkan persamaan")
-    print("4. Hitung solusi trapezoidal")
-    print("5. Tulis solusi ke dalam file")
-    print("6. Kembali ke menu sebelumnya")
-    print("0. Kembali ke menu utama")
+    # fx = ''
+    # solusi_trap = 0
     while True:
-        a = choice()
-        if a == 1:
+        print("========================")
+        print("1. Input persamaan manual")
+        print("2. Input persamaan dari file")
+        print("3. Tampilkan persamaan")
+        print("4. Hitung solusi trapezoidal")
+        print("5. Tulis solusi ke dalam file")
+        print("6. Kembali ke menu sebelumnya")
+        print("0. Kembali ke menu utama")
+        print("99. Exit program")
+        c = choice()
+        if c == 1:
             fx = input_fx()
-        elif a == 2:
+        elif c == 2:
             fx = input_file()
-        elif a == 3:
+        elif c == 3:
+            print("------------------------")
             try:
                 x = 0
                 eval(fx)
             except:
                 print("Persamaan belum ada...")
             else:
-                graph_fx(fx)
-        elif a == 4:
+                print(fx)
+                c = input("Ketik y untuk menampilkan grafik: ")
+                if c == 'y' or c == 'Y':
+                    graph_fx(fx)
+                input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
+        elif c == 4:
             print("------------------------")
-            a = int(input("Masukkan batas bawah: "))
-            b = int(input("Masukkan batas atas: "))
-            N = int(input("Masukkan step: "))
-            solusi_trap = trap(fx, a, b, N)
-            print(f"Solusi adalah: {solusi_trap}")
-            print("------------------------")
-            input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
-
-
-
-        elif a == 5:
+            try:
+                a = int(input("Masukkan batas bawah: "))
+                b = int(input("Masukkan batas atas: "))
+                N = int(input("Masukkan step: "))
+                solusi_trap = trap(fx, a, b, N)
+            except:
+                print("Terjadi kesalahan")
+            else:
+                print(f"Solusi adalah: {solusi_trap}")
+                print("------------------------")
+                input("Tekan enter untuk melanjutkan.. (kembali ke menu sebelumnya)")
+        elif c == 5:
             output_file(fx)
-        elif a == 6:
-            pass
-        elif a == 0:
-            pass
+        elif c == 6:
+            main.main()
+        elif c == 0:
+            main.main()
+        elif c == 99:
+            break
         else:
             pass
 
 
-trapezoidal_inf()
+# ---------------------------------------------------------#
+
+if __name__ == "__main__":
+    trapezoidal_interface()
