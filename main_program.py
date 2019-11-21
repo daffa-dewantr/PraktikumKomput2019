@@ -7,6 +7,7 @@ Modul .py untuk semua menu dalam program
 
 import os
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 
 
@@ -143,6 +144,22 @@ def choice():
             break
     return i
 
+def tentang_program():
+    print("====================================")
+    print("Tugas Komputasi Kelompok 1")
+    print("------------------------------------")
+    print("1. Daffa Dewantara - 12317012")
+    print("2. Jonathan Adii - 12317028")
+    print("3. Ariq Gustama P. - 12317052")
+    print("------------------------------------")
+    print("dibuat sebagai pemenuhan tugas akhir")
+    print("====================================")
+    print("====================================")
+    print("====================================")
+    print("====================================")
+    print("====================================")
+    print("====================================")
+    print("====================================")
 
 def main_menu():
     clear()
@@ -164,6 +181,10 @@ def main_menu():
         regression_main_menu()
     elif c == 4:
         interpolate_main_menu()
+    elif c == 5:
+        tentang_program()
+    else:
+        main_menu()
 
 
 # ================================================================#
@@ -297,7 +318,7 @@ def gauss_main_menu(a=None, b=None):
                 x = gauss(a, b)
             except:
                 print("------------------------------------")
-                print("Soal belum diinput............")
+                print("......soal belum diinput............")
                 print("------------------------------------")
                 print("Tekan enter untuk melanjutkan.")
                 input()
@@ -373,10 +394,21 @@ def graph_fx_trapezoidal(func):
     a = int(input("Masukkan batas bawah: "))
     b = int(input("Masukkan batas atas: "))
     x = np.arange(a, b, 0.01)
-    #
-    plt.plot(x, func(x))
+
+    fig, ax = plt.subplots()
+
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.spines['bottom'].set_position(('data', 0))  # set position of x spine to x=0
+    ax.yaxis.set_ticks_position('left')
+    ax.spines['left'].set_position(('data', 0))  # set position of y spine to y=0
+    ax.grid(True)
+    ax.plot(x, func(x), 'r', label='Fx')
+    legend = ax.legend(loc=2)
+    plt.xlabel("x")
+    plt.ylabel("f(x) = y")
     plt.show()
-    #
     return None
 
 
@@ -423,7 +455,7 @@ def trapezoidal_main_menu(fx=None):
                 test_fx(fx, 0)
             except:
                 print("------------------------------------")
-                print("Soal belum diinput............")
+                print("......soal belum diinput............")
                 print("------------------------------------")
                 print("Tekan enter untuk melanjutkan.")
                 input()
@@ -491,14 +523,14 @@ def input_data():
             i_y = int(input("y: "))
         except:
             print("------------------------------------")
-            print("data salah!!")
+            print("error!")
         else:
             x.append(i_x)
             y.append(i_y)
-            print("...Data dimasukkan......")
+            print("..........data dimasukkan...........")
         finally:
-            print("Ketik q untuk kembali ke menu sebelumnya")
-            i = input()
+            print("Ketik q untuk kembali")
+            i = input("Enter untuk melanjutkan input data: ")
             if i == 'q' or i == 'Q':
                 break
     x = np.array(x, dtype='float')
@@ -529,16 +561,14 @@ def tambah_data(x, y):
             i_y = int(input("y: "))
         except:
             print("------------------------------------")
-            print("data salah!")
+            print("error!")
         else:
             x = np.append(x, i_x)
             y = np.append(y, i_y)
-            print("------------------------------------")
-            print("Data dimasukkan...")
+            print(".........data dimasukkan............")
         finally:
-            print("------------------------------------")
-            print("Ketik q untuk kembali ke menu sebelumnya")
-            i = input()
+            print("Ketik q untuk kembali")
+            i = input("Enter untuk melanjutkan input data: ")
             if i == 'q' or i == 'Q':
                 break
     return x, y
@@ -553,7 +583,7 @@ def edit_data(x, y):
         i_xy = input("x/y: ")
     except:
         print("------------------------------------")
-        print("Terjadi kesalahan!")
+        print("error!")
     else:
         i_no -= 1
         if i_xy == 'x' or i_xy == 'X':
@@ -578,8 +608,7 @@ def edit_data(x, y):
                 print("angka yang dimasukkan salah!")
             else:
                 y[i_no] = i_y
-        print("------------------------------------")
-        print("Data diperbaharui")
+        print("..........data diperbaharui.........")
         print("Tekan enter untuk melanjutkan.")
         input()
     return x, y
@@ -593,14 +622,7 @@ def lihat_data(x, y, graph=False):
         print(f"{counter}\t|\t{i}\t\t{y[j]}")
         j += 1
         counter = counter + 1
-    if graph is True:
-        c = input("Masukkan y untuk melihat grafik: ")
-        if c == 'y' or c == 'Y':
-            fig, ax = plt.subplots()
-            ax.plot(x, y, 'ro', label='data')
-            plt.xlabel("x")
-            plt.ylabel("y")
-            plt.show()
+    return None
 
 
 # ================================================================#
@@ -613,7 +635,7 @@ def regression_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0)):
     while True:
         clear()
         print("====================================")
-        print("Trapezoidal Method Program")
+        print("Regression Method Program")
         print("====================================")
         print("1. Input/Edit Data")
         print("2. Lihat data")
@@ -667,9 +689,15 @@ def regression_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0)):
                 lihat_data(x, y)
             except:
                 pass
-            print("------------------------------------")
-            print("Tekan enter untuk melanjutkan.")
-            input()
+            else:
+                c = input("Ketik y untuk tampilkan grafik: ")
+                if c == 'y' or c == 'Y':
+                    plt.plot(x, y, 'r.')
+                    plt.show()
+            finally:
+                print("------------------------------------")
+                print("Tekan enter untuk melanjutkan.")
+                input()
 
         elif c == 3:
             print("------------------------------------")
@@ -779,6 +807,11 @@ def interpolate_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0), n_po
                 lihat_data(x, y)
             except:
                 pass
+            else:
+                c = input("Ketik y untuk tampilkan grafik: ")
+                if c == 'y' or c == 'Y':
+                    plt.plot(x, y, 'r.')
+                    plt.show()
             finally:
                 print("------------------------------------")
                 print("Tekan enter untuk melanjutkan.")
@@ -798,7 +831,6 @@ def interpolate_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0), n_po
             else:
                 print("------------------------------------")
                 print(".derajat polinom telah diperbaharui.")
-
         elif c == 4:
             print("------------------------------------")
             try:
@@ -829,7 +861,7 @@ def interpolate_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0), n_po
             except:
                 print("error!")
             else:
-                graph_fx_data(f, x, y, xi, yi, x_min - 1, x_max + 1)
+                graph_fx_data(f, x, y, xi, yi, x_min - 0.5, x_max + 0.5)
             finally:
                 print("------------------------------------")
                 print("Tekan enter untuk melanjutkan.")
@@ -845,17 +877,30 @@ def interpolate_main_menu(x=None, y=None, xi=np.arange(0), yi=np.arange(0), n_po
 # -----------------------------------------------------------------------------------------#
 
 def graph_fx_data(f, x, y, xi, yi, x_min, x_max):
+    """Fungsi untuk membuat grafik dari data."""
+    matplotlib.use('png')
+
     x_plot = np.linspace(x_min, x_max, 1000)
     y_plot = f(x_plot)
 
     fig, ax = plt.subplots()
     ax.plot(x, y, 'ro', label='data')
     ax.plot(xi, yi, 'bs', label='titik yang diestimasi')
-    ax.plot(x_plot, y_plot, 'g', label='garis regresi')
+    ax.plot(x_plot, y_plot, 'g', label='garis regresi/interpolasi')
+    ax.axis('tight')
     legend = ax.legend()
     plt.xlabel("x")
     plt.ylabel("f(x) = y")
     plt.show()
+
+    c = input("Ketik y untuk menyimpan gambar: ")
+    if c == 'y' or c == 'Y':
+        try:
+            print("------------------------------------")
+            i = int(input("Nama file: "))
+            plt.savefig(i)
+        except:
+            print("error!")
     return None
 
 
