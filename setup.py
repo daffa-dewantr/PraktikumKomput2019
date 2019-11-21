@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Setup file for trgauss_calc.
+    Setup file for kalkulator_komputasi.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 3.2.3.
